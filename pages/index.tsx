@@ -7,7 +7,7 @@ import LargeCard from "../components/LargeCard";
 import MediumCard from "../components/MediumCard";
 import SmallCard from "../components/SmallCard";
 
-const Home: NextPage = ({ exploreData,cardsData }) => {
+const Home: NextPage = ({ exploreData,cardsData }:any) => {
   console.log(cardsData);
   return (
     <div className="">
