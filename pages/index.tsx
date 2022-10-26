@@ -6,16 +6,15 @@ import Header from "../components/Header";
 import LargeCard from "../components/LargeCard";
 import MediumCard from "../components/MediumCard";
 import SmallCard from "../components/SmallCard";
-
+import prisma from '../lib/prisma'
 const Home: NextPage = ({ exploreData,cardsData }:any) => {
-  console.log(cardsData);
   return (
-    <div className="">
+    <div className="h-screen overflow-y-scroll scrollbar scrollbar-thumb-red-400 scrollbar-track-gray-100">
       <Head>
         <title>Airbnb</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
+      <Header placeholder={''}/>
       <Banner />
       <main className="max-w-7xl mx-auto px-8 sm:px-16">
         <section className="pt-6">
@@ -46,19 +45,21 @@ const Home: NextPage = ({ exploreData,cardsData }:any) => {
           buttonText="Get Inspired"      />
       </main>
       <Footer/>
-    </div>
+      </div>
   );
 };
 
 export default Home;
 export const getStaticProps = async () => {
-  const exploreData = await fetch('https://my-json-server.typicode.com/lyra-planet/typicode/gets/1').then(res=>res.json())
-
-  const cardsData = await fetch('https://my-json-server.typicode.com/lyra-planet/typicode/airbnb').then(res=>res.json())
+  //@ts-ignore
+  const exploreData = await prisma.exploredata.findMany()
+  //@ts-ignore
+  const cardsData = await prisma.cardsdata.findMany()
+  console.log(exploreData)
   return {
     props: {
-      exploreData: exploreData.data,
-      cardsData:cardsData.data
+      exploreData: exploreData,
+      cardsData:cardsData
     },
     revalidate: 10,
   };
